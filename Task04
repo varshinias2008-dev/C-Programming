@@ -1,0 +1,15 @@
+#include <stdio. h>
+
+#define RUPEES_TO_PAISE(X) ((x) * 100)
+#define SQUARE(x) ((X) * (x)
+#define MAX(a,b) ((a) > (b) ? (a) : (b)}
+
+int main(void)
+{
+
+printf("Rupees to paise: %rd\n",  RUPEES_TO_PAISE(10);
+printf("Square: %d\n", SQUARE(5));
+printf("Maximum: %d\n", MAX(10, 20));
+
+   return 0;
+}
