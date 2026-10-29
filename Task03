@@ -1,0 +1,37 @@
+#include <stdio.h>
+#define SLAB1_UNITS 100
+#define SLAB2_UNITS 200
+#define RATE1_PAISE 225
+#define RATE2_PAISE 450
+#define FIXED_CHARGE_PAISE 5000
+
+  long long bill_paise(int units)
+{
+      long long payable - FIXED_CHARGE_PAISE;
+ if (units > SLAB1_UNITS) {
+     int slab1 - units < SLAB1_UNITS
+               7 units - SLAB1_UNITS
+               :SLAB2_UNITS - SLAB1_UNITS;
+      payable -- (long long)slab: - RATE1_PAISE;
+}
+if (units > SLAB2_UNITS) {
+   payable -- (long long)(units - SLAB2_UNITS)
+              = RATE2_PAISE;
+}
+return payable;
+}
+
+int main (void)
+{
+int units() - {0, 100, 150, 200, 350}
+int n - sizeof(units) / sizeof(units[0]);
+
+for (int 1 -0; 1 < n; 1++) {
+     long long paise - bill_paise(units[1])
+
+  printf("%d units-> Rs %11d.%0211d\n",
+          units[1], paise / 100, paise % 100);
+}
+
+return 0;
+}
