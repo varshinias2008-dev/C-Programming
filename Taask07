@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <math.h>
+
+int main(void)
+{
+    int a = 5, b = 2;
+    long long large = 3000000000LL;
+    double charge = 12.345;
+
+    printf("Expression 1: 5 / 2 = %d\n", a / b);
+    printf("Expression 2: (double)(5 / 2) = %.1f\n",
+           (double)(a / b));
+    printf("Expression 3: (int)3.99 = %d\n", (int)3.99);
+    printf("Correct division: %.1f\n", (double)a / b);
+    printf("Large value as long long: %lld\n", large);
+    printf("Rounded charge in paise: %lld\n",
+           (long long)round(charge * 100.0));
+
+    return 0;
+}
