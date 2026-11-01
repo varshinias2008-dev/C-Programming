@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+#ifndef BILLING_H
+#define BILLING_H
+
+#define SLAB1_UNITS 100
+#define SLAB2_UNITS 200
+#define RATE1_PAISE 225LL
+#define RATE2_PAISE 450LL
+#define FIXED_CHARGE_PAISE 5000LL
+
+long long bill_paise(int units);
+
+#endif
+
+#ifdef DEBUG
+#define DEBUG_PRINT(value) printf("DEBUG: units = %d\n", (value))
+#else
+#define DEBUG_PRINT(value) ((void)0)
+#endif
+
+long long bill_paise(int units)
+{
+    long long total = FIXED_CHARGE_PAISE;
+
+    if (units > SLAB1_UNITS) {
+        int slab1 = (units < SLAB2_UNITS)
+                    ? units - SLAB1_UNITS
+                    : SLAB2_UNITS - SLAB1_UNITS;
+        total += (long long)slab1 * RATE1_PAISE;
+    }
+
+    if (units > SLAB2_UNITS)
+        total += (long long)(units - SLAB2_UNITS) * RATE2_PAISE;
+
+    return total;
+}
+
+int main(void)
+{
+    int units;
+
+    printf("Enter units consumed: ");
+    if (scanf("%d", &units) != 1 || units < 0) {
+        printf("Invalid units.\n");
+        return 1;
+    }
+
+    DEBUG_PRINT(units);
+
+    long long total = bill_paise(units);
+    printf("Total bill = Rs. %lld.%02lld\n", total / 100, total % 100);
+
+    return 0;
+}
