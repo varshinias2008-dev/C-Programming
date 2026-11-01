@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <math.h>
+
+int main(void)
+{
+    FILE *file;
+    int normal_rate, peak_rate, surcharge;
+    long long normalWh, peakWh, totalWh, totalPaise;
+    long double amount;
+
+    file = fopen("tariff.txt", "r");
+    if (file == NULL) {
+        printf("Cannot open tariff.txt\n");
+        return 1;
+    }
+
+    if (fscanf(file, "%d %d %d",
+               &normal_rate, &peak_rate, &surcharge) != 3) {
+        printf("Invalid tariff file.\n");
+        fclose(file);
+        return 1;
+    }
+    fclose(file);
+
+    if (normal_rate < 0 || peak_rate < 0 ||
+        surcharge < 0) {
+        printf("Invalid tariff values.\n");
+        return 1;
+    }
+
+    printf("Enter normal-hour energy in Wh: ");
+    if (scanf("%lld", &normalWh) != 1 || normalWh < 0) {
+        printf("Invalid energy reading.\n");
+        return 1;
+    }
+
+    printf("Enter peak-hour energy in Wh: ");
+    if (scanf("%lld", &peakWh) != 1 || peakWh < 0) {
+        printf("Invalid energy reading.\n");
+        return 1;
+    }
+
+    totalWh = normalWh + peakWh;
+
+    amount = ((long double)normalWh * normal_rate
+            + (long double)peakWh * peak_rate
+              * (100 + surcharge) / 100.0L) / 1000.0L;
+
+    totalPaise = (long long)roundl(amount);
+
+    printf("Total energy: %lld Wh\n", totalWh);
+    printf("Energy charge: Rs. %lld.%02lld\n",
+           totalPaise / 100, totalPaise % 100);
+
+    return 0;
+}
