@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+#define MAX_READING 65535LL
+#define FIXED_CHARGE 5000LL
+#define RATE1 225LL
+#define RATE2 450LL
+
+long long bill_paise(long long units)
+{
+    long long energy = 0;
+
+    if (units > 100 && units <= 200)
+        energy = (units - 100) * RATE1;
+    else if (units > 200)
+        energy = 100 * RATE1 + (units - 200) * RATE2;
+
+    return FIXED_CHARGE + energy;
+}
+
+int main(void)
+{
+    long long previous, current, units, total;
+
+    printf("Enter previous meter reading (0-65535): ");
+    if (scanf("%lld", &previous) != 1 ||
+        previous < 0 || previous > MAX_READING) {
+        printf("Invalid previous reading.\n");
+        return 1;
+    }
+
+    printf("Enter current meter reading (0-65535): ");
+    if (scanf("%lld", &current) != 1 ||
+        current < 0 || current > MAX_READING) {
+        printf("Invalid current reading.\n");
+        return 1;
+    }
+
+    if (current >= previous)
+        units = current - previous;
+    else
+        units = (MAX_READING + 1 - previous) + current;
+
+    total = bill_paise(units);
+
+    printf("Units consumed: %lld\n", units);
+    printf("Total bill: Rs. %lld.%02lld\n", total / 100, total % 100);
+
+    return 0;
+}
