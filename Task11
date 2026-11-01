@@ -1,0 +1,60 @@
+#include <stdio.h>
+
+#define SLAB1_UNITS 100LL
+#define SLAB2_UNITS 200LL
+#define RATE1_PAISE 225LL
+#define RATE2_PAISE 450LL
+#define FIXED_CHARGE_PAISE 5000LL
+
+long long calculate_bill(long long units)
+{
+    long long energy = 0;
+
+    if (units > SLAB1_UNITS) {
+        long long slab1 = units - SLAB1_UNITS;
+
+        if (slab1 > SLAB2_UNITS - SLAB1_UNITS)
+            slab1 = SLAB2_UNITS - SLAB1_UNITS;
+
+        energy += slab1 * RATE1_PAISE;
+    }
+
+    if (units > SLAB2_UNITS)
+        energy += (units - SLAB2_UNITS) * RATE2_PAISE;
+
+    return FIXED_CHARGE_PAISE + energy;
+}
+
+int main(void)
+{
+    int houses, i;
+    long long previous, current, units, bill, grand_total = 0;
+
+    printf("Enter number of households: ");
+    if (scanf("%d", &houses) != 1 || houses < 1) {
+        printf("Invalid number of households.\n");
+        return 1;
+    }
+
+    for (i = 1; i <= houses; i++) {
+        printf("\nHousehold %d - enter previous and current readings: ", i);
+
+        if (scanf("%lld %lld", &previous, &current) != 2 ||
+            previous < 0 || current < previous) {
+            printf("Invalid readings. Program stopped.\n");
+            return 1;
+        }
+
+        units = current - previous;
+        bill = calculate_bill(units);
+        grand_total += bill;
+
+        printf("Units: %lld\n", units);
+        printf("Bill: Rs. %lld.%02lld\n", bill / 100, bill % 100);
+    }
+
+    printf("\nGrand total: Rs. %lld.%02lld\n",
+           grand_total / 100, grand_total % 100);
+
+    return 0;
+}
